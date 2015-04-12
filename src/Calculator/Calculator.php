@@ -15,6 +15,18 @@ class Calculator
         return;
     }
 
+    public function calculate($calculation)
+    {
+        $eval = '$result = '.$calculation.';';
+        eval($eval);
+        return $result;
+    }
+
+
+    /**
+     * A __toString() kind of method.
+     * @return string
+     */
     public function getName()
     {
         return __CLASS__;

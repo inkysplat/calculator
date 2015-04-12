@@ -41,6 +41,8 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
      */
     public function testExampleCalculation()
     {
-        $this->calculator->calculate("1+1+*3+3");
+        $result = $this->calculator->calculate('1+1*3+3');
+        //eval('$result=1+1*3+3;');
+        $this->assertEquals($result, 7);
     }
 }
