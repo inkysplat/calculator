@@ -12,11 +12,18 @@
 class CalculatorTest extends PHPUnit_Framework_TestCase
 {
     /**
+     * @var src\Calculator\Calculator
+     */
+    private $calculator;
+
+    /**
      * Setup Method ran before each test below is executed.
      */
     public function setUp()
     {
         parent::setUp();
+        $this->calculator = new \src\Calculator\Calculator();
+
     }
 
     /**
@@ -25,7 +32,15 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
      */
     public function testCalculatorLoaded()
     {
-        $calculator = new \src\Calculator\Calculator();
-        $this->assertEquals($calculator->getName(), 'src\Calculator\Calculator');
+
+        $this->assertEquals($this->calculator->getName(), 'src\Calculator\Calculator');
+    }
+
+    /**
+     * Example Calculation Given in the Test
+     */
+    public function testExampleCalculation()
+    {
+        $this->calculator->calculate("1+1+*3+3");
     }
 }
