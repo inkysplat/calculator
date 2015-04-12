@@ -21,11 +21,10 @@
         timeoutForSmallTests="1"
         timeoutForMediumTests="10"
         timeoutForLargeTests="60"
-        verbose="false">
+        verbose="true">
     <testsuite>
         <testsuite name="calculator">
-            <directory>tests/*Test.php</directory>
+            <directory>tests</directory>
         </testsuite>
     </testsuite>
-
 </phpunit>
