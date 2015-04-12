@@ -7,13 +7,32 @@ To use the Calculator simply instantiate the Calculator object and use the *numb
 
 To calculate your sum simply call the *equals()* method.
 
-Example below
+Example below (using method chaining);
 
 ```php
 $calculator = new src\Calculator\Calculator();
 $result = $calculator->number(1)->add()->number(1)->multiply()->number(3)->add()->number(3)->equals();
-var_dump($result); //int(3)
+var_dump($result); //int(7)
 ```
+
+The same example can be written as (without method chaining);
+
+```php
+$calculator = new src\Calculator\Calculator();
+$calculator->number(1);
+$calculator->add()
+$calculator->number(1);
+$calculator->multiply();
+$calculator->number(3);
+$calculator->add();
+$calculator->number(3);
+$result = $calculator->equals();
+var_dump($result); //int(7)
+```
+
+### Error Handling & Exceptions
+
+The __number()__ method expects a number, this can be either a integer or a double. Failure to provide a valid number will throw an *InvalidNumberException*.
 
 ### Implementation Notes
 
