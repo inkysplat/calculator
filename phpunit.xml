@@ -21,7 +21,8 @@
         timeoutForSmallTests="1"
         timeoutForMediumTests="10"
         timeoutForLargeTests="60"
-        verbose="true">
+        verbose="true"
+        bootstrap="bootstrap.php">
     <testsuite>
         <testsuite name="calculator">
             <directory>tests</directory>

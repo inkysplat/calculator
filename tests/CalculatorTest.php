@@ -11,7 +11,21 @@
  */
 class CalculatorTest extends PHPUnit_Framework_TestCase
 {
-    public function testTest(){
-        $this->assertTrue(true);
+    /**
+     * Setup Method ran before each test below is executed.
+     */
+    public function setUp()
+    {
+        parent::setUp();
+    }
+
+    /**
+     * Just test we've got a Calculator Loaded, just a sanity check whilst setting up
+     * PHPUnit.
+     */
+    public function testCalculatorLoaded()
+    {
+        $calculator = new \src\Calculator\Calculator();
+        $this->assertEquals($calculator->getName(), 'src\Calculator\Calculator');
     }
 }
