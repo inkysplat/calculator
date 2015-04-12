@@ -3,6 +3,7 @@
 namespace src\Calculator;
 
 use src\Calculator\Contracts\CalculatorInterface;
+use src\Calculator\Exceptions\InvalidCalculationException;
 use src\Calculator\Exceptions\InvalidNumberException;
 
 /**
@@ -20,7 +21,8 @@ class Calculator implements CalculatorInterface
     /**
      * Default Constructor.
      */
-    public function __construct(){
+    public function __construct()
+    {
         return;
     }
 
@@ -33,8 +35,7 @@ class Calculator implements CalculatorInterface
      */
     public function number($number)
     {
-        if (!is_numeric($number) || !is_int($number))
-        {
+        if (!is_numeric($number) || !is_int($number)) {
             throw new InvalidNumberException("Invalid Number Provided. Expecting an Integer or Double.");
         }
 
@@ -98,8 +99,14 @@ class Calculator implements CalculatorInterface
     public function equals()
     {
         $calculation = $this->getCalculation();
-        $eval = '$result = '.$calculation.';';
+        $eval = '$result = ' . $calculation . ';';
         eval($eval);
+
+        //some error handling.
+        if (!isset($result)) {
+            throw new InvalidCalculationException("Invalid Calculation. Please try again.");
+        }
+
         return $result;
     }
 
