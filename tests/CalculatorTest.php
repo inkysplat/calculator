@@ -41,13 +41,27 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
      */
     public function testExampleCalculation()
     {
-        $result = $this->calculator->number(1)->add()->number(1)->multiply()->number(3)->add()->number(3)->calculate();
+        $this->calculator->number(1);
+        $this->calculator->add();
+        $this->calculator->number(1);
+        $this->calculator->multiply();
+        $this->calculator->number(3);
+        $this->calculator->add();
+        $this->calculator->number(3);
+        $result = $this->calculator->calculate();
+
         $this->assertEquals($result, 7);
     }
 
     public function testAdditionCalculation()
     {
-        $result = $this->calculator->number(1)->add()->number(1)->calculate();
+        $this->calculator->number(1);
+        $this->calculator->add();
+        $this->calculator->number(1);
+        $result = $this->calculator->calculate();
         $this->assertEquals($result,2);
+
+        $calculation = $this->calculator->getCalculation();
+        $this->assertEquals($calculation, '1+1');
     }
 }

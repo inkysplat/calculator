@@ -57,9 +57,14 @@ class Calculator
         return $this;
     }
 
+    public function getCalculation()
+    {
+        return implode('', $this->calculation);
+    }
+
     public function calculate()
     {
-        $calculation = implode('', $this->calculation);
+        $calculation = $this->getCalculation();
         $eval = '$result = '.$calculation.';';
         eval($eval);
         return $result;
