@@ -34,6 +34,13 @@ var_dump($result); //int(7)
 
 The __number()__ method expects a number, this can be either a integer or a double. Failure to provide a valid number will throw an *InvalidNumberException*.
 
+Failure to build a valid calculation will result in a *InvalidCalculationException()* being thrown. Such calculations could look like;
+
+```php
+$calculator = new src\Calculator\Calculator();
+$calculator->add()->subtract()->divide()->equals();
+```
+
 ### Implementation Notes
 
 A consideration for this Calculator is how it deals with precedence of the operands in mathematics.

@@ -129,6 +129,21 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($calcaulation, '5-2');
     }
 
+
+    /**
+     * Test for invalid Calculation
+     *
+     * @expectException InvalidCalculationException
+     */
+    public function testInvalidCalculation()
+    {
+        try{
+            $this->calculator->add()->multiply();
+        }catch(\src\Calculator\Exceptions\InvalidCalculationException $e){
+            $this->assertEquals($e->getMessage(),"Invalid Calculation. Please try again.");
+        }
+    }
+
     /**
      * Test for invalid numbers
      *
