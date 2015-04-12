@@ -1,6 +1,7 @@
 <?php
 
 namespace src\Calculator;
+
 use src\Calculator\Exceptions\InvalidNumberException;
 
 /**
@@ -25,6 +26,7 @@ class Calculator
     /**
      * Let's add a number to our Calculation.
      *
+     * @throws src\Calculator\Exceptions\InvalidNumberException
      * @param Integer $number
      * @return $this
      */
@@ -39,43 +41,66 @@ class Calculator
         return $this;
     }
 
+    /**
+     * Will add an Addition Operand into the Calculation.
+     * @return $this
+     */
     public function add()
     {
         $this->calculation[] = '+';
         return $this;
     }
 
+    /**
+     * Will add a Substraction Operand into the Calculation.
+     * @return $this
+     */
     public function substract()
     {
         $this->calculation[] = '-';
         return $this;
     }
 
+    /**
+     * Will add a Multiplication Operand into the Calculation.
+     * @return $this
+     */
     public function multiply()
     {
         $this->calculation[] = '*';
         return $this;
     }
 
+    /**
+     * Will add a Division Operand into the Calculation.
+     * @return $this
+     */
     public function divide()
     {
         $this->calculation[] = '/';
         return $this;
     }
 
+    /**
+     * Will generate our Calculation
+     * @return string
+     */
     public function getCalculation()
     {
         return implode('', $this->calculation);
     }
 
-    public function calculate()
+    /**
+     * Will Calculate the Calculation provided.
+     * @return Integer
+     */
+    public function equals()
     {
         $calculation = $this->getCalculation();
         $eval = '$result = '.$calculation.';';
         eval($eval);
         return $result;
     }
-
 
     /**
      * A __toString() kind of method.

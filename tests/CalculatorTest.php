@@ -17,7 +17,8 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
     private $calculator;
 
     /**
-     * Setup Method ran before each test below is executed.
+     * Setup Method ran before each test below is executed. This creates a new
+     * Calculator Object for each Test.
      */
     public function setUp()
     {
@@ -48,7 +49,7 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         $this->calculator->number(3);
         $this->calculator->add();
         $this->calculator->number(3);
-        $result = $this->calculator->calculate();
+        $result = $this->calculator->equals();
 
         $this->assertEquals($result, 7);
     }
@@ -61,7 +62,7 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         $this->calculator->number(1);
         $this->calculator->add();
         $this->calculator->number(1);
-        $result = $this->calculator->calculate();
+        $result = $this->calculator->equals();
         $this->assertEquals($result,2);
 
         $calculation = $this->calculator->getCalculation();
@@ -76,7 +77,7 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         $this->calculator->number(2);
         $this->calculator->multiply();
         $this->calculator->number(2);
-        $result = $this->calculator->calculate();
+        $result = $this->calculator->equals();
         $this->assertEquals($result,4);
 
         $calculation = $this->calculator->getCalculation();
@@ -91,7 +92,7 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         $this->calculator->number(0);
         $this->calculator->divide();
         $this->calculator->number(1);
-        $result = $this->calculator->calculate();
+        $result = $this->calculator->equals();
         $this->assertEquals($result, 0);
 
         $calculation = $this->calculator->getCalculation();
@@ -106,20 +107,26 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         $this->calculator->number(2);
         $this->calculator->multiply();
         $this->calculator->number(1);
-        $result = $this->calculator->calculate();
+        $result = $this->calculator->equals();
         $this->assertEquals($result,2);
 
         $calculation = $this->calculator->getCalculation();
         $this->assertEquals($calculation, '2*1');
     }
 
+    /**
+     * Testing a Simple Subtraction calculation.
+     */
     public function testSubtractionCalculation()
     {
         $this->calculator->number(5);
         $this->calculator->substract();
         $this->calculator->number(2);
-        $result = $this->calculator->calculate();
+        $result = $this->calculator->equals();
         $this->assertEquals($result, 3);
+
+        $calcaulation = $this->calculator->getCalculation();
+        $this->assertEquals($calcaulation, '5-2');
     }
 
     /**
