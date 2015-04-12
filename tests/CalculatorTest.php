@@ -53,6 +53,9 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($result, 7);
     }
 
+    /**
+     * Tests a simple Addition Calculation
+     */
     public function testAdditionCalculation()
     {
         $this->calculator->number(1);

@@ -1,6 +1,7 @@
 <?php
 
 namespace src\Calculator;
+use src\Calculator\Exceptions\InvalidNumberException;
 
 /**
  * Class Calculator
@@ -29,6 +30,11 @@ class Calculator
      */
     public function number($number)
     {
+        if (!is_numeric($number))
+        {
+            throw new InvalidNumberException("Invalid Number Provided. Expecting an Integer or Double.");
+        }
+
         $this->calculation[] = $number;
         return $this;
     }
