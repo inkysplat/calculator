@@ -9,14 +9,57 @@ namespace src\Calculator;
 class Calculator
 {
     /**
+     * Stores our calculation in Array parts.
+     * @var array
+     */
+    private $calculation = [];
+
+    /**
      * Default Constructor.
      */
     public function __construct(){
         return;
     }
 
-    public function calculate($calculation)
+    /**
+     * Let's add a number to our Calculation.
+     *
+     * @param Integer $number
+     * @return $this
+     */
+    public function number($number)
     {
+        $this->calculation[] = $number;
+        return $this;
+    }
+
+    public function add()
+    {
+        $this->calculation[] = '+';
+        return $this;
+    }
+
+    public function substract()
+    {
+        $this->calculation[] = '-';
+        return $this;
+    }
+
+    public function multiply()
+    {
+        $this->calculation[] = '*';
+        return $this;
+    }
+
+    public function divide()
+    {
+        $this->calculation[] = '/';
+        return $this;
+    }
+
+    public function calculate()
+    {
+        $calculation = implode('', $this->calculation);
         $eval = '$result = '.$calculation.';';
         eval($eval);
         return $result;

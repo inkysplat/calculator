@@ -45,4 +45,10 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         //eval('$result=1+1*3+3;');
         $this->assertEquals($result, 7);
     }
+
+    public function testAdditionCalculation()
+    {
+        $result = $this->calculator->number(1)->add()->number(1)->calculate();
+        $this->assertEquals($result,2);
+    }
 }
