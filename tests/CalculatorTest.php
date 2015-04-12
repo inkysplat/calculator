@@ -84,6 +84,21 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests that dividing by Zero returns 0. This is a non-sense calculation.
+     */
+    public function testDividingByZeroCalculation()
+    {
+        $this->calculator->number(0);
+        $this->calculator->divide();
+        $this->calculator->number(1);
+        $result = $this->calculator->calculate();
+        $this->assertEquals($result, 0);
+
+        $calculation = $this->calculator->getCalculation();
+        $this->assertEquals($calculation, '0/1');
+    }
+
+    /**
      * Tests a Multiplying by 1
      */
     public function testMultiplicationByOneCalculation()
@@ -98,7 +113,18 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($calculation, '2*1');
     }
 
+    public function testSubtractionCalculation()
+    {
+        $this->calculator->number(5);
+        $this->calculator->substract();
+        $this->calculator->number(2);
+        $result = $this->calculator->calculate();
+        $this->assertEquals($result, 3);
+    }
+
     /**
+     * Test for invalid numbers
+     *
      * @expectException InvalidNumberException
      */
     public function testInvalidNumber()
