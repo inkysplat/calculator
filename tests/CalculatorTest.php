@@ -67,4 +67,46 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         $calculation = $this->calculator->getCalculation();
         $this->assertEquals($calculation, '1+1');
     }
+
+    /**
+     * Tests a simple Multiplication Calculation
+     */
+    public function testMultiplicationCalculation()
+    {
+        $this->calculator->number(2);
+        $this->calculator->multiply();
+        $this->calculator->number(2);
+        $result = $this->calculator->calculate();
+        $this->assertEquals($result,4);
+
+        $calculation = $this->calculator->getCalculation();
+        $this->assertEquals($calculation, '2*2');
+    }
+
+    /**
+     * Tests a Multiplying by 1
+     */
+    public function testMultiplicationByOneCalculation()
+    {
+        $this->calculator->number(2);
+        $this->calculator->multiply();
+        $this->calculator->number(1);
+        $result = $this->calculator->calculate();
+        $this->assertEquals($result,2);
+
+        $calculation = $this->calculator->getCalculation();
+        $this->assertEquals($calculation, '2*1');
+    }
+
+    /**
+     * @expectException InvalidNumberException
+     */
+    public function testInvalidNumber()
+    {
+        try{
+            $this->calculator->number('A');
+        }catch(\src\Calculator\Exceptions\InvalidNumberException $e){
+            $this->assertEquals($e->getMessage(),"Invalid Number Provided. Expecting an Integer or Double.");
+        }
+    }
 }

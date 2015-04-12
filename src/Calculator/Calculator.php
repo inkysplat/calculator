@@ -30,7 +30,7 @@ class Calculator
      */
     public function number($number)
     {
-        if (!is_numeric($number))
+        if (!is_numeric($number) || !is_int($number))
         {
             throw new InvalidNumberException("Invalid Number Provided. Expecting an Integer or Double.");
         }
