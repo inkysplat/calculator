@@ -1,0 +1,13 @@
+{
+    "name": "inkysplat/calculator",
+    "description": "Unit Tested Calculator",
+    "require": {
+        "phpunit/phpunit": "~4.6"
+    },
+    "authors": [
+        {
+            "name": "Adam Nicholls",
+            "email": "inkysplat@gmail.com"
+        }
+    ]
+}
