@@ -19,11 +19,11 @@ var_dump($result); //int(3)
 
 A consideration for this Calculator is how it deals with precedence of the operands in mathematics.
 
-PHP as a language deals with this already, so to make life easier in this simple example we've used *eval()*.
+PHP as a language deals with this already so to make our life easier in this simple example we've used *eval()*.
 
-In a scenario where user input maybe required the use of *eval()* isn't recommended as user's can potentially execute PHP code on the server, posing a security risk.
+In a scenario where user input maybe required the use of *eval()* isn't recommended as a user can execute PHP code on the server. This poses a security risk!
 
-As the calculation is stored in the *Calculator()->calculation* variable an alternative would be to iterate over the parts and process the numbers to the left and right of the appropriate operands.
+As the calculation is stored as an *Array()* an alternative would be to iterate over the parts and process the numbers to the left and right of the appropriate operands.
 
 
 ## Tests

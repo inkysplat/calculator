@@ -2,13 +2,14 @@
 
 namespace src\Calculator;
 
+use src\Calculator\Contracts\CalculatorInterface;
 use src\Calculator\Exceptions\InvalidNumberException;
 
 /**
  * Class Calculator
  * @package src\Calculator
  */
-class Calculator
+class Calculator implements CalculatorInterface
 {
     /**
      * Stores our calculation in Array parts.
