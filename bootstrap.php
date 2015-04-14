@@ -17,6 +17,7 @@ require_once ROOT_PATH.'/src/Calculator/Models/Subtract.php';
 require_once ROOT_PATH.'/src/Calculator/Models/Multiply.php';
 require_once ROOT_PATH.'/src/Calculator/Models/Divide.php';
 require_once ROOT_PATH.'/src/Calculator/Models/Number.php';
+require_once ROOT_PATH.'/src/Calculator/OperandFactory.php';
 require_once ROOT_PATH.'/src/Calculator/Calculator.php';
 
 

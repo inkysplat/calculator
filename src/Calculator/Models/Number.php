@@ -2,6 +2,8 @@
 
 namespace src\Calculator\Models;
 
+use src\Calculator\Exceptions\InvalidNumberException;
+
 /**
  * Class Number
  * @package src\Calculator\Models
