@@ -36,9 +36,9 @@ class OperandFactory
             return self::$cache[$operand];
         }
 
-        $class = ucfirst($operand);
+        $class = 'src\Calculator\Models\\'.ucfirst($operand);
         if (!class_exists($class)) {
-            throw new InvalidOperandException(__METHOD__ . '::Invalid Operand Provided.');
+            throw new InvalidOperandException(__METHOD__ . '::Invalid Operand Provided..."'.$class.'""');
         }
 
         $object = new $class();

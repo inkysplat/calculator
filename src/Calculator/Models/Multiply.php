@@ -13,5 +13,5 @@ class Multiply extends Operand implements OperatorInterface
     /**
      * @var string
      */
-    private $operand = '*';
+    protected $operand = '*';
 }

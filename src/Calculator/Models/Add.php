@@ -13,5 +13,5 @@ class Add extends Operand implements OperatorInterface
     /**
      * @var string
      */
-    private $operand = '+';
+    protected $operand = '+';
 }

@@ -29,6 +29,14 @@ class Number
     }
 
     /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Number';
+    }
+
+    /**
      * @return int
      */
     public function getNumber()

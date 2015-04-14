@@ -1,5 +1,8 @@
 <?php
 
+error_reporting(-1);
+ini_set('display_errors', 1);
+
 define("ROOT_PATH", realpath(dirname(__FILE__)));
 
 /**
@@ -17,6 +20,7 @@ require_once ROOT_PATH.'/src/Calculator/Models/Subtract.php';
 require_once ROOT_PATH.'/src/Calculator/Models/Multiply.php';
 require_once ROOT_PATH.'/src/Calculator/Models/Divide.php';
 require_once ROOT_PATH.'/src/Calculator/Models/Number.php';
+require_once ROOT_PATH.'/src/Calculator/CalculatorIterator.php';
 require_once ROOT_PATH.'/src/Calculator/OperandFactory.php';
 require_once ROOT_PATH.'/src/Calculator/Calculator.php';
 

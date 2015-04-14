@@ -33,7 +33,6 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
      */
     public function testCalculatorLoaded()
     {
-
         $this->assertEquals($this->calculator->getName(), 'src\Calculator\Calculator');
     }
 
@@ -49,8 +48,11 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         $this->calculator->number(3);
         $this->calculator->add();
         $this->calculator->number(3);
-        $result = $this->calculator->equals();
 
+        $calculation = $this->calculator->getCalculation();
+        $this->assertEquals($calculation, '1+1*3+3');
+
+        $result = $this->calculator->equals();
         $this->assertEquals($result, 7);
     }
 

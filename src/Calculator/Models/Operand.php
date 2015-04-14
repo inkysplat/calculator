@@ -16,4 +16,12 @@ abstract class Operand
     {
         return $this->operand;
     }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return get_class($this);
+    }
 }

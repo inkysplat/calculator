@@ -13,5 +13,5 @@ class Divide extends Operand implements OperatorInterface
     /**
      * @var string
      */
-    private $operand = '/';
+    protected $operand = '/';
 }
