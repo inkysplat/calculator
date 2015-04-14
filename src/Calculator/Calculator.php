@@ -3,8 +3,10 @@
 namespace src\Calculator;
 
 use src\Calculator\Contracts\CalculatorInterface;
+use src\Calculator\Contracts\OperatorInterface;
 use src\Calculator\Exceptions\InvalidCalculationException;
 use src\Calculator\Exceptions\InvalidNumberException;
+use src\Calculator\Models\Number;
 
 /**
  * Class Calculator
@@ -35,11 +37,7 @@ class Calculator implements CalculatorInterface
      */
     public function number($number)
     {
-        if (!is_numeric($number) || !is_int($number)) {
-            throw new InvalidNumberException("Invalid Number Provided. Expecting an Integer or Double.");
-        }
-
-        $this->calculation[] = $number;
+        $this->calculation[] = new Number($number);
         return $this;
     }
 
@@ -49,7 +47,7 @@ class Calculator implements CalculatorInterface
      */
     public function add()
     {
-        $this->calculation[] = '+';
+        $this->calculation[] = OperandFactory::create('Add');
         return $this;
     }
 
@@ -59,7 +57,7 @@ class Calculator implements CalculatorInterface
      */
     public function substract()
     {
-        $this->calculation[] = '-';
+        $this->calculation[] = OperandFactory::create('Subtract');
         return $this;
     }
 
@@ -69,7 +67,7 @@ class Calculator implements CalculatorInterface
      */
     public function multiply()
     {
-        $this->calculation[] = '*';
+        $this->calculation[] = OperandFactory::create('Multiply');
         return $this;
     }
 
@@ -79,17 +77,27 @@ class Calculator implements CalculatorInterface
      */
     public function divide()
     {
-        $this->calculation[] = '/';
+        $this->calculation[] = OperandFactory::create('Divide');
         return $this;
     }
 
     /**
-     * Will generate our Calculation
+     * Will generate our Calculation as a String
      * @return string
      */
     public function getCalculation()
     {
-        return implode('', $this->calculation);
+        $calculation = '';
+        foreach($this->calculation as $part){
+            if($part instanceof Number){
+                $calculation.= $part->getNumber();
+            }
+
+            if($part instanceof OperatorInterface){
+                $calculation.= $part->getOperand();
+            }
+        }
+        return $calculation;
     }
 
     /**
@@ -98,9 +106,7 @@ class Calculator implements CalculatorInterface
      */
     public function equals()
     {
-        $calculation = $this->getCalculation();
-        $eval = '$result = ' . $calculation . ';';
-        eval($eval);
+
 
         //some error handling.
         if (!isset($result)) {
