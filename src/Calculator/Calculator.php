@@ -41,6 +41,10 @@ class Calculator implements CalculatorInterface
      */
     public function number($number)
     {
+        if(count($this->calculation) > 0 && !(end($this->calculation) instanceof OperatorInterface)){
+            throw new InvalidCalculationException("Expecting Operand Next");
+        }
+
         $this->calculation[] = new Number($number);
         return $this;
     }
@@ -51,6 +55,10 @@ class Calculator implements CalculatorInterface
      */
     public function add()
     {
+        if(count($this->calculation) > 0 && !(end($this->calculation) instanceof Number)){
+            throw new InvalidCalculationException("Expecting Number Next");
+        }
+
         $this->calculation[] = OperandFactory::create('Add');
         return $this;
     }
@@ -61,6 +69,10 @@ class Calculator implements CalculatorInterface
      */
     public function substract()
     {
+        if(count($this->calculation) > 0 && !(end($this->calculation) instanceof Number)){
+            throw new InvalidCalculationException("Expecting Number Next");
+        }
+
         $this->calculation[] = OperandFactory::create('Subtract');
         return $this;
     }
@@ -71,6 +83,10 @@ class Calculator implements CalculatorInterface
      */
     public function multiply()
     {
+        if(count($this->calculation) > 0 && !(end($this->calculation) instanceof Number)){
+            throw new InvalidCalculationException("Expecting Number Next");
+        }
+
         $this->calculation[] = OperandFactory::create('Multiply');
         return $this;
     }
@@ -81,6 +97,10 @@ class Calculator implements CalculatorInterface
      */
     public function divide()
     {
+        if(count($this->calculation) > 0 && !(end($this->calculation) instanceof Number)){
+            throw new InvalidCalculationException("Expecting Number Next");
+        }
+
         $this->calculation[] = OperandFactory::create('Divide');
         return $this;
     }
@@ -104,9 +124,55 @@ class Calculator implements CalculatorInterface
         return $calculation;
     }
 
-    private function log($message){
-        echo "\n".$message;
+    /**
+     * Finds Previous Item in the Array
+     * @param array $calculations
+     * @param integer $prev
+     * @return mixed
+     */
+    private function findPrev($calculations, $prev)
+    {
+        $prev = ($prev - 1);
+        while ($prev > 0 && $calculations[$prev] == '') {
+            $prev = ($prev - 1);
+            if ($prev < 0) {
+                return false;
+            }
+        }
+        return $prev;
     }
+
+    /**
+     * Finds Next Item in the Array
+     * @param array $calculations
+     * @param integer $next
+     * @return bool
+     */
+    private function findNext($calculations, $next)
+    {
+        $next = ($next + 1);
+        if (isset($calculations[$next])) {
+            return $next;
+        }
+        return false;
+    }
+
+    /**
+     * Will strip out any empty values from the array that we may have spliced out...
+     * @param array $calculations
+     * @return array
+     */
+    private function filterCalculations($calculations)
+    {
+        $temp = [];
+        foreach ($calculations as $calc) {
+            if ($calc !== '') {
+                $temp[] = $calc;
+            }
+        }
+        return $temp;
+    }
+
 
     /**
      * Will Calculate the Calculation provided.
@@ -115,76 +181,57 @@ class Calculator implements CalculatorInterface
     public function equals()
     {
         $i = 0;
-        $calculation = [];
-        $iterator = new CalculatorIterator($this->calculation);
-        while ($iterator->count() > 1) {
-            $this->log("COUNT ".$iterator->count());
-            $calculation[$i] = [];
-            while ($iterator->valid()) {
+        $calculations = $this->calculation;
+        while (count($calculations) > 1) {
+            for ($j = 0; $j < count($calculations); $j++) {
+                if ($calculations[$j] instanceof OperatorInterface) {
 
-                if ($iterator->current() instanceof Number) {
-                    $this->log("Adding Number ".$iterator->current()->getNumber());
-                    array_push($calculation[$i], $iterator->current());
-                }
-
-                if ($iterator->current() instanceof OperatorInterface) {
-                    $number1 = $iterator->prev();
-                    $number2 = $iterator->next();
                     $result = false;
-                    switch ($i) {
-                        case 0:
-                            if ($iterator->current() instanceof Multiply) {
-                                $result = $number1->getNumber() * $number2->getNumber();
-                                $this->log($result." = ".$number1->getNumber().' x '.$number2->getNumber());
-                            } elseif ($iterator->current() instanceof Divide) {
-                                $result = $number1->getNumber() / $number2->getNumber();
-                                $this->log($result." = ".$number1->getNumber().' / '.$number2->getNumber());
+                    $next = $this->findNext($calculations, $j);
+                    $prev = $this->findPrev($calculations, $j);
+
+                    if ($prev !== false && $next !== false) {
+                        $number1 = $calculations[$prev]->getNumber();
+                        $number2 = $calculations[$next]->getNumber();
+
+                        if ($i == 0) {
+                            if ($calculations[$j] instanceof Multiply) {
+                                $result = $number1 * $number2;
                             }
-                            break;
-                        default:
-                            if ($iterator->current() instanceof Add) {
-                                $result = $number1->getNumber() + $number2->getNumber();
-                                $this->log($result." = ".$number1->getNumber().' + '.$number2->getNumber());
-                            } elseif ($iterator->current() instanceof Subtract) {
-                                $result = $number1->getNumber() - $number2->getNumber();
-                                $this->log($result." = ".$number1->getNumber().' - '.$number2->getNumber());
+                            if ($calculations[$j] instanceof Divide) {
+                                $result = $number1 / $number2;
                             }
-                            break;
+                        } else {
+                            if ($calculations[$j] instanceof Add) {
+                                $result = $number1 + $number2;
+                            }
+                            if ($calculations[$j] instanceof Subtract) {
+                                $result = $number1 - $number2;
+                            }
+                        }
                     }
 
-                    if($result){
-                        $this->log("Adding Result ".$result);
-                        $result = new Number($result);
-                        $iterator->setPrev($result);
-                        if(count($calculation[$i]) > 0) {
-                            array_pop($calculation[$i]);
-                           //$this->log("Removing last item ".$last);
-                        }
-                        var_dump($iterator->calculation);
-                        array_push($calculation[$i], $result);
-                        $this->log("Moving Forward");
-                        $iterator->forward();
-                    }else{
-                        $this->log("Adding Operand ".$iterator->current()->getOperand());
-                        array_push($calculation[$i], $iterator->current());
+                    //we have to use a strict type comparison here because dividing
+                    //by 0 results in false as a result of the calculation
+                    if ($result !== false) {
+                        $calculations[$j] = '';
+                        if (isset($calculations[$next]))
+                            $calculations[$next] = '';
+                        $number = new Number($result);
+                        $calculations[$prev] = $number;
+                        $calculations = $this->filterCalculations($calculations);
                     }
                 }
-                var_dump(($calculation[$i]));
-                $iterator->forward();
-
             }
-            $iterator = new CalculatorIterator($calculation[$i]);
+
+            //filter our calculation array so there's no blank values left in it...
+            //this is a weird way of working but array_filter() wasn't working.
+            $calculations = $this->filterCalculations($calculations);
             $i++;
         }
 
-        var_dump($calculation);
-        die();
-        //some error handling.
-        if (!isset($result)) {
-            //throw new InvalidCalculationException("Invalid Calculation. Please try again.");
-        }
-
-        return $result;
+        //we can assume we've got 1 number left!
+        return $calculations[0]->getNumber();
     }
 
     /**

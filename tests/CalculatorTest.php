@@ -142,7 +142,7 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         try{
             $this->calculator->add()->multiply();
         }catch(\src\Calculator\Exceptions\InvalidCalculationException $e){
-            $this->assertEquals($e->getMessage(),"Invalid Calculation. Please try again.");
+            $this->assertEquals($e->getMessage(),"Expecting Number Next");
         }
     }
 
